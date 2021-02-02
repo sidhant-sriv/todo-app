@@ -1,0 +1,111 @@
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <title>{{title}}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins&display=swap"
+      rel="stylesheet"
+    />
+
+    <!--style-->
+    <style>
+      textarea {
+        margin: 0px;
+        width: 283px;
+        height: 210px;
+      }
+      input,
+      textarea {
+        color: white;
+        background-color: #131212;
+        border: 0ch;
+        border-radius: 5px;
+      }
+      body {
+        background-color: rgb(18, 18, 19);
+        background-image: url("./bg.jpg");
+        font-family: "Poppins", sans-serif;
+        color: white;
+        margin: 10px;
+        padding-right: 10px;
+      }
+      .card {
+        background: rgb(0, 0, 0);
+        margin-bottom: 5%;
+        font-size: medium;
+        border-radius: 25px;
+        padding: 2%;
+        overflow: auto;
+        resize: both;
+        text-overflow: ellipsis;
+      }
+
+      .submit_form {
+        text-align: center;
+        padding: 3%;
+        background: rgb(0, 0, 0);
+        border-radius: 23px;
+      }
+    </style>
+  </head>
+
+  <body class="container-fluid">
+    <center class="row">
+      <h1>Epic Todo list</h1>
+      <br />
+    </center>
+
+    <div class="row">
+      <div class="col-md-7">
+        {% for i in list %}
+        <div class="card">
+          <center><b>{{i.title}}</b></center>
+          <br />
+          {{i.details}}
+          <form
+            autocomplete="off"
+            action="/del/{{i.id}}"
+            method="POST"
+            style="padding-right: 4%; padding-bottom: 3%"
+          >
+            {% csrf_token %}
+            <button
+              value="remove"
+              type="submit"
+              class="btn btn-success"
+              style="float: right"
+            >
+              <span class="glyphicon glyphicon-ok"></span> &nbsp; Done
+            </button>
+          </form>
+        </div>
+        {% endfor%}
+      </div>
+      <div class="col-md-1"></div>
+      <div class="col-md-3">
+        <div class="submit_form">
+          <form method="POST">
+            {% csrf_token %} {{forms}}
+            <center>
+              <input type="submit" class="btn btn-primary" value="submit" />
+            </center>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
